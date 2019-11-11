@@ -1,6 +1,8 @@
-# Trabalho Compiladores - Análise Léxica
+# Compiladores 
 
 ---
+
+## Análise Léxica   
 
 O analisador léxico deverá ser implementado com o auxílio de um Autômato Finito Determinístico. Ele deverá reconhecer um lexema e retornar, a cada chamada,um token de acordo com o lexema encontrado.
 
@@ -17,8 +19,11 @@ Os erros verificados serão: i) caracteres desconhecidos (não esperados em um p
 ii) string não fechada antes de quebra de linha e iii) string não-fechada antes do fim de arquivo. Se o
 analisador léxico encontrar mais do que um erro léxico, o processo de compilação deve ser
 interrompido.
-
  
+![AFD](AUTOMATO.jff.png)
+ 
+## Requisitos  
+
 * Para rodar este programa é aconselhável que esteja usando o PyCharm 
 
 * Para rodar o programa deve estar usando Python 3. Caso o da sua máquina seja Python 2 rode o comando a seguir para executa-lo:
@@ -28,6 +33,5 @@ interrompido.
 
 * Para alterar o código que deseja testar basta alterar o conteúdo do arquivo `programa.txt`
 
-![AFD](AUTOMATO.jff.png)
 
 *Desenvolvido por: Fernanda Teixeira Ferry e Vitória Maria.*
