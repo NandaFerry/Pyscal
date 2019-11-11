@@ -24,9 +24,7 @@ interrompido.
  
 ## Requisitos  
 
-* Para rodar este programa é aconselhável que esteja usando o PyCharm 
-
-* Para rodar o programa deve estar usando Python 3. Caso o da sua máquina seja Python 2 rode o comando a seguir para executa-lo:
+* Para rodar a aplicação deve-se possuir o Python3. Caso não possua rode o comando a seguir para executa-lo:
 `python3 main.py`
 
 * Caso apresente o erro de não encontrar o diretório 'módulos', marque-o como Sources Root (PyCharm).
@@ -34,4 +32,3 @@ interrompido.
 * Para alterar o código que deseja testar basta alterar o conteúdo do arquivo `programa.txt`
 
 
-*Desenvolvido por: Fernanda Teixeira Ferry e Vitória Maria.*
