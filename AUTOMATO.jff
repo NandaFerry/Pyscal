@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="0" name="q0">
+			<x>694.0</x>
+			<y>49.0</y>
+			<initial/>
+		</state>
+		<state id="1" name="q1">
+			<x>956.0</x>
+			<y>0.0</y>
+			<label>&lt;op,"*"&gt;</label>
+			<final/>
+		</state>
+		<state id="2" name="q2">
+			<x>1071.0</x>
+			<y>54.0</y>
+			<label>&lt;op, "/"&gt;</label>
+			<final/>
+		</state>
+		<state id="3" name="q3">
+			<x>1093.0</x>
+			<y>111.0</y>
+			<label>&lt;op, "+"&gt;</label>
+			<final/>
+		</state>
+		<state id="4" name="q4">
+			<x>1084.0</x>
+			<y>176.0</y>
+		</state>
+		<state id="5" name="q5">
+			<x>1266.0</x>
+			<y>107.0</y>
+			<label>&lt;CmdAtribui, " = "&gt;</label>
+			<final/>
+		</state>
+		<state id="6" name="q6">
+			<x>1291.0</x>
+			<y>176.0</y>
+			<label>&lt;op, "=="&gt;</label>
+			<final/>
+		</state>
+		<state id="7" name="q7">
+			<x>1134.0</x>
+			<y>245.0</y>
+		</state>
+		<state id="8" name="q8">
+			<x>1411.0</x>
+			<y>240.0</y>
+			<label>&lt;OpUnario, " ! "&gt;</label>
+			<final/>
+		</state>
+		<state id="9" name="q9">
+			<x>1359.0</x>
+			<y>317.0</y>
+			<label>&lt; op, "!="&gt;</label>
+			<final/>
+		</state>
+		<state id="10" name="q10">
+			<x>1117.0</x>
+			<y>313.0</y>
+		</state>
+		<state id="11" name="q11">
+			<x>1398.0</x>
+			<y>404.0</y>
+			<label>&lt;op, "&gt;="&gt;</label>
+			<final/>
+		</state>
+		<state id="12" name="q12">
+			<x>1410.0</x>
+			<y>523.0</y>
+			<label>&lt;op, "&gt;" &gt;</label>
+			<final/>
+		</state>
+		<state id="13" name="q13">
+			<x>1088.0</x>
+			<y>366.0</y>
+		</state>
+		<state id="14" name="q14">
+			<x>1237.0</x>
+			<y>479.0</y>
+			<label>&lt;op, "&lt;=" &gt;</label>
+			<final/>
+		</state>
+		<state id="15" name="q15">
+			<x>1160.0</x>
+			<y>559.0</y>
+			<label>&lt;op, "&lt;" &gt; </label>
+			<final/>
+		</state>
+		<state id="16" name="q16">
+			<x>905.0</x>
+			<y>366.0</y>
+		</state>
+		<state id="17" name="q17">
+			<x>1013.0</x>
+			<y>346.0</y>
+			<label>ConstInteger</label>
+			<final/>
+		</state>
+		<state id="18" name="q18">
+			<x>908.0</x>
+			<y>480.0</y>
+			<label>ponto</label>
+		</state>
+		<state id="19" name="q19">
+			<x>1052.0</x>
+			<y>481.0</y>
+			<label>ConstDouble</label>
+			<final/>
+		</state>
+		<state id="20" name="q20">
+			<x>878.0</x>
+			<y>603.0</y>
+			<final/>
+		</state>
+		<state id="21" name="q21">
+			<x>796.0</x>
+			<y>478.0</y>
+			<final/>
+		</state>
+		<state id="22" name="q22">
+			<x>756.0</x>
+			<y>592.0</y>
+			<final/>
+		</state>
+		<state id="23" name="q23">
+			<x>681.0</x>
+			<y>479.0</y>
+			<final/>
+		</state>
+		<state id="24" name="q24">
+			<x>607.0</x>
+			<y>505.0</y>
+			<label>virgula</label>
+			<final/>
+		</state>
+		<state id="26" name="q25">
+			<x>498.0</x>
+			<y>474.0</y>
+			<label>ponto e virgula</label>
+			<final/>
+		</state>
+		<state id="27" name="q26">
+			<x>357.0</x>
+			<y>503.0</y>
+			<label>dois pontos</label>
+			<final/>
+		</state>
+		<state id="28" name="q27">
+			<x>345.0</x>
+			<y>420.0</y>
+		</state>
+		<state id="29" name="q28">
+			<x>264.0</x>
+			<y>474.0</y>
+			<label>comentário</label>
+			<final/>
+		</state>
+		<state id="30" name="q29">
+			<x>329.0</x>
+			<y>315.0</y>
+		</state>
+		<state id="31" name="q30">
+			<x>164.0</x>
+			<y>316.0</y>
+		</state>
+		<state id="32" name="q31">
+			<x>167.0</x>
+			<y>410.0</y>
+			<label>ConstString</label>
+			<final/>
+		</state>
+		<state id="33" name="q32">
+			<x>313.0</x>
+			<y>207.0</y>
+		</state>
+		<state id="34" name="q33">
+			<x>158.0</x>
+			<y>192.0</y>
+			<label>ID</label>
+			<final/>
+		</state>
+		<state id="35" name="q34">
+			<x>315.0</x>
+			<y>48.0</y>
+			<final/>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>28</from>
+			<to>28</to>
+			<read/>
+		</transition>
+		<transition>
+			<from>10</from>
+			<to>11</to>
+			<read>=</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>26</to>
+			<read>;</read>
+		</transition>
+		<transition>
+			<from>16</from>
+			<to>16</to>
+			<read>[0-9]</read>
+		</transition>
+		<transition>
+			<from>19</from>
+			<to>19</to>
+			<read>[0-9]</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>7</to>
+			<read>!</read>
+		</transition>
+		<transition>
+			<from>13</from>
+			<to>15</to>
+			<read>outro</read>
+		</transition>
+		<transition>
+			<from>31</from>
+			<to>32</to>
+			<read>" </read>
+		</transition>
+		<transition>
+			<from>31</from>
+			<to>31</to>
+			<read>ASCII</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>35</to>
+			<read>-</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>4</to>
+			<read>=</read>
+		</transition>
+		<transition>
+			<from>16</from>
+			<to>17</to>
+			<read>outro</read>
+		</transition>
+		<transition>
+			<from>28</from>
+			<to>29</to>
+			<read>\n</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>0</to>
+			<read>espaço, \n</read>
+		</transition>
+		<transition>
+			<from>30</from>
+			<to>31</to>
+			<read>ASCII</read>
+		</transition>
+		<transition>
+			<from>33</from>
+			<to>34</to>
+			<read>outro</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>30</to>
+			<read>"</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>28</to>
+			<read>#</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>2</to>
+			<read>/</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>+</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>27</to>
+			<read>:</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>outro</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>20</to>
+			<read>(</read>
+		</transition>
+		<transition>
+			<from>18</from>
+			<to>19</to>
+			<read>[0-9]</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>6</to>
+			<read>=</read>
+		</transition>
+		<transition>
+			<from>13</from>
+			<to>14</to>
+			<read>=</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>13</to>
+			<read>&lt;</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>22</to>
+			<read>]</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>*</read>
+		</transition>
+		<transition>
+			<from>33</from>
+			<to>33</to>
+			<read>[A-Za-z0-9]</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>23</to>
+			<read>[</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>33</to>
+			<read>[A-Za-z]</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>16</to>
+			<read>[0-9]</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>24</to>
+			<read>,</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>21</to>
+			<read>)</read>
+		</transition>
+		<transition>
+			<from>10</from>
+			<to>12</to>
+			<read>outro</read>
+		</transition>
+		<transition>
+			<from>16</from>
+			<to>18</to>
+			<read>.</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>9</to>
+			<read>=</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>10</to>
+			<read>&gt;</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>5</to>
+			<read>outro</read>
+		</transition>
+		<note>
+			<text>aspas</text>
+			<x>176.0</x>
+			<y>120.0</y>
+		</note>
+		<note>
+			<text>return &lt;OP, -&gt;</text>
+			<x>178.0</x>
+			<y>55.0</y>
+		</note>
+		<note>
+			<text>return &lt;ID,lexema&gt;</text>
+			<x>73.0</x>
+			<y>157.0</y>
+		</note>
+		<note>
+			<text>return &lt;LIT, lexema&gt;</text>
+			<x>69.0</x>
+			<y>295.0</y>
+		</note>
+		<note>
+			<text>return &lt;COMENTARIO,lexema&gt;</text>
+			<x>95.0</x>
+			<y>337.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_DOIS_PONTOS, ": "&gt;</text>
+			<x>179.0</x>
+			<y>354.0</y>
+		</note>
+		<note>
+			<text>return &lt;OP_PONTO_VIRGULA,";"&gt;</text>
+			<x>262.0</x>
+			<y>334.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_VIRGULA, ","&gt; </text>
+			<x>344.0</x>
+			<y>359.0</y>
+		</note>
+		<note>
+			<text>return &lt;OP_</text>
+			<x>169.0</x>
+			<y>153.0</y>
+		</note>
+		<note>
+			<text>return &lt;OP_FCO, "]"&gt;</text>
+			<x>399.0</x>
+			<y>328.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_ACO, "]"&gt;</text>
+			<x>449.0</x>
+			<y>401.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_APA, "("&gt;</text>
+			<x>532.0</x>
+			<y>408.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_FPA,")"&gt;</text>
+			<x>478.0</x>
+			<y>328.0</y>
+		</note>
+		<note>
+			<text>return&lt;NUM_DOUBLE,lexema&gt;</text>
+			<x>601.0</x>
+			<y>340.0</y>
+		</note>
+		<note>
+			<text>return&lt;NUM_INTEIRO,lexema&gt;</text>
+			<x>588.0</x>
+			<y>256.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_MENOR,"&lt;"&gt;</text>
+			<x>677.0</x>
+			<y>389.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_MENOR_IGUAL,"&lt;="&gt;</text>
+			<x>739.0</x>
+			<y>337.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_MAIOR,"&gt;"&gt;</text>
+			<x>854.0</x>
+			<y>369.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_MAIOR_IGUAL,"&gt;="&gt;</text>
+			<x>902.0</x>
+			<y>262.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_DIFERENTE,"!="&gt;</text>
+			<x>878.0</x>
+			<y>209.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_UNARIO_DIFERENTE,"!"&gt;</text>
+			<x>918.0</x>
+			<y>159.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_MULTIPLICACAO,"*"&gt;</text>
+			<x>622.0</x>
+			<y>7.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_DIVISAO,"/"&gt;</text>
+			<x>695.0</x>
+			<y>38.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_SOMA,"+"&gt;</text>
+			<x>706.0</x>
+			<y>71.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_UNARIO_IGUAL,"="&gt;</text>
+			<x>818.0</x>
+			<y>70.0</y>
+		</note>
+		<note>
+			<text>return&lt;OP_IGUAL_IGUAL,"=="&gt;</text>
+			<x>835.0</x>
+			<y>121.0</y>
+		</note>
+	</automaton>
+</structure>
