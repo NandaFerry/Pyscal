@@ -144,6 +144,245 @@ class Parser():
         else:
             return
 
+    # Arg → TipoPrimitivo ID
+    def Arg(self):
+        self.TipoPrimitivo()
+        if not self.eat(Tag.ID):
+            self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # Retorno → "return" Expressao ";" | ε
+    def Retorno(self):
+        if self.eat(Tag.KW_RETURN):
+
+            self.Expressao()
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        elif (self.token.getNome() == Tag.KW_END):
+            return
+
+    # Main → "defstatic" "void" "main" "(" "String" "[" "]" ID ")" ":" RegexDeclaraId ListaCmd "end" ";"
+    def Main(self):
+        if self.eat(Tag.KW_DEFSTATIC):
+
+            if not self.eat(Tag.KW_VOID):
+                self.sinalizaErroSintatico("Esperado \"void\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.KW_MAIN):
+                self.sinalizaErroSintatico("Esperado \"main\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_APA):
+                self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.KW_STRING):
+                self.sinalizaErroSintatico(
+                    "Esperado \"String\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_ACO):
+                self.sinalizaErroSintatico("Esperado \"[\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_FCO):
+                self.sinalizaErroSintatico("Esperado \"]\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.ID):
+                self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_DOIS_PONTOS):
+                self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.RegexDeclaraId()
+            self.ListaCmd()
+            if not self.eat(Tag.KW_END):
+                self.sinalizaErroSintatico("Esperado \"end\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.sinalizaErroSintatico("Esperado \"defstatic\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # TipoPrimitivo → "bool" | "integer" | "String" | "double" | "void"
+    def TipoPrimitivo(self):
+        if (self.eat(Tag.KW_BOOL) or self.eat(Tag.KW_INTEGER) or self.eat(Tag.KW_STRING) or self.eat(
+                Tag.KW_DOUBLE) or self.eat(Tag.KW_VOID)):
+            return
+
+    # ListaCmd → ListaCmd’
+    def ListaCmd(self):
+        self.ListaCmdLinha()
+
+    # ListaCmd’ →  Cmd ListaCmd’ 23 | ε
+    def ListaCmdLinha(self):
+        self.Cmd()
+        self.ListaCmdLinha()
+        if (
+                self.token.getNome() == Tag.KW_RETURN or self.token.getNome() == Tag.KW_END or self.token.getNome() == Tag.KW_ELSE):
+            return
+
+    # Cmd → CmdIF | CmdWhile | ID CmdAtribFunc | CmdWrite
+    # def Cmd(self):
+
+    # CmdAtribFunc→ CmdAtribui | CmdFuncao
+    # def CmdAtribFunc(self):
+
+    # CmdIF → "if" "(" Expressao ")" ":" ListaCmd CmdIF’
+    def CmdIF(self):
+        if self.eat(Tag.KW_IF):
+            if not self.eat(Tag.OP_APA):
+                self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.Expressao()
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_DOIS_PONTOS):
+                self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.ListaCmd()
+            self.CmdIFLinha()
+        else:
+            self.sinalizaErroSintatico("Esperado \"if\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # CmdIF’ → "end" ";"| "else" ":" ListaCmd "end" ";"
+    def CmdIFLinha(self):
+        if self.eat(Tag.KW_END):
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        elif self.eat(Tag.KW_ELSE):
+            if not self.eat(Tag.OP_DOIS_PONTOS):
+                self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.ListaCmd()
+            if not self.eat(Tag.KW_END):
+                self.sinalizaErroSintatico("Esperado \"end\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # CmdWhile → "while" "(" Expressao ")" ":" ListaCmd "end" ";" 34
+    def CmdWhile(self):
+        if self.eat(Tag.KW_WHILE):
+            if not self.eat(Tag.OP_APA):
+                self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.Expressao()
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_DOIS_PONTOS):
+                self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.ListaCmd()
+            if not self.eat(Tag.KW_END):
+                self.sinalizaErroSintatico("Esperado \"end\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.sinalizaErroSintatico("Esperado \"while\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # CmdWrite → "write" "(" Expressao ")" ";"
+    def CmdWrite(self):
+        if self.eat(Tag.KW_WRITE):
+            if not self.eat(Tag.OP_APA):
+                self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.Expressao()
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.sinalizaErroSintatico("Esperado \"write\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # CmdAtribui → "=" Expressao ";"
+    def CmdAtribui(self):
+        if self.eat(Tag.OP_UNARIO_IGUAL):
+            self.Expressao()
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.sinalizaErroSintatico("Esperado \"=\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # CmdFuncao → "(" RegexExp ")" ";"
+    def CmdFuncao(self):
+        if self.eat(Tag.OP_APA):
+            self.RegexExp()
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
+    # RegexExp → Expressao RegexExp’ | ε
+    def RegexExp(self):
+        self.Expressao()
+        self.RegexExpLinha()
+        if (self.token.getNome() == Tag.OP_FPA):
+            return
+
+    # RegexExp’ → , Expressao RegexExp’ | ε
+    def RegexExpLinha(self):
+        if self.eat(Tag.OP_VIRGULA):
+            self.Expressao()
+            self.RegexExpLinha()
+        elif (self.token.getNome() == Tag.OP_FPA):
+            return
+
+    # Expressao → Exp1 Exp’
+    def Expressao(self):
+        self.Exp1()
+        self.ExpLinha()
+
+    # Exp’ → "or" Exp1 Exp’ | "and" Exp1 Exp’ | ε
+    def ExpLinha(self):
+        if (self.eat(Tag.KW_OR) or self.eat(Tag.KW_AND)):
+            self.Exp1()
+            self.ExpLinha()
+        elif (
+                self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or self.token.getNome() == Tag.OP_VIRGULA):
+            return
+
+    # Exp1 → Exp2 Exp1’
+    def Exp1(self):
+        self.Exp2()
+        self.Exp1Linha()
+
+    # Exp1’ → "<" Exp2 Exp1’ 47 | "<=" Exp2 Exp1’ 48 | ">" Exp2 Exp1’ 49 | ">=" Exp2 Exp1’ 50 | "==" Exp2 Exp1’ 51 | "!=" Exp2 Exp1’ 52  | ε
+    def Exp1Linha(self):
+        if (self.eat(Tag.OP_MENOR) or self.eat(Tag.OP_MENOR_IGUAL) or self.eat(Tag.OP_MAIOR) or self.eat(
+                Tag.OP_MAIOR_IGUAL) or self.eat(Tag.OP_IGUAL_IGUAL) or self.eat(Tag.OP_DIFERENTE)):
+            return
+        elif (
+                self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or self.token.getNome() == Tag.OP_VIRGULA):
+            return
+
+    # Exp2 → Exp3 Exp2’
+    def Exp2(self):
+        self.Exp3()
+        self.Exp2Linha()
+
+    # Exp2’ → "+" Exp3 Exp2’ | "-" Exp3 Exp2’ | ε
+    def Exp2Linha(self):
+        if (self.eat(Tag.OP_ADICAO) or self.eat(Tag.OP_SUBTRACAO)):
+            self.Exp3()
+            self.Exp2Linha()
+        elif (
+                self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE or self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or self.token.getNome() == Tag.OP_VIRGULA):
+            return
+
+    # Exp3 → Exp4 Exp3’
+    def Exp3(self):
+        self.Exp4()
+        self.Exp3Linha()
+
+    # Exp3’ → "*" Exp4 Exp3’ | "/" Exp4 Exp3’ | ε
+    def Exp3Linha(self):
+        if (self.eat(Tag.OP_MULTIPLICACAO) or self.eat(Tag.OP_DIVISAO)):
+            self.Exp4()
+            self.Exp3Linha()
+        elif (
+                self.token.getNome() == Tag.OP_SUBTRACAO or self.token.getNome() == Tag.OP_ADICAO or self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE or self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or self.token.getNome() == Tag.OP_VIRGULA):
+            return
+
+    # Exp4 → ID Exp4’ | ConstInteger | ConstDouble | ConstString | "true" | "false" | OpUnario Exp4 | "(" Expressao")"
+
+    # Exp4’ → "(" RegexExp ")" | ε
+    def Exp4Linha(self):
+        if self.eat(Tag.OP_APA):
+            self.RegexExp()
+            if not self.eat(Tag.OP_FPA):
+                self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        elif (
+                self.token.getNome() == Tag.OP_MULTIPLICACAO or self.token.getNome() == Tag.OP_DIVISAO or self.token.getNome() == Tag.OP_SUBTRACAO or self.token.getNome() == Tag.OP_ADICAO or self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE or self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or self.token.getNome() == Tag.OP_VIRGULA):
+            return
+
+    # OpUnario → "-" | "!"
+    def OpUnario(self):
+        if (self.eat(Tag.OP_NEGACAO) or self.eat(Tag.OP_UNARIO_DIFERENTE)):
+            return
 
 # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     def Cmd(self):
