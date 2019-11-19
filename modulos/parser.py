@@ -1,9 +1,9 @@
 import sys
 
-from ts import TS
-from tag import Tag
-from token import Token
-from lexer import Lexer
+from modulos.ts import TS
+from modulos.tag import Tag
+from modulos.token import Token
+from modulos.lexer import Lexer
 
 """
  * *
@@ -30,7 +30,7 @@ class Parser():
 
     def __init__(self, lexer):
         self.lexer = lexer
-        self.token = lexer.proxToken()  # Leitura inicial obrigatoria do primeiro simbolo
+        self.token = lexer.proxToken(None)  # Leitura inicial obrigatoria do primeiro simbolo
 
     def sinalizaErroSintatico(self, message):
         print("[Erro Sintatico] na linha " + str(self.token.getLinha()) + " e coluna " + str(

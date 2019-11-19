@@ -1,9 +1,15 @@
 from modulos.tag import Tag
+from modulos.token import Token
 from modulos.lexer import Lexer
+from modulos.parser import Parser
 
 if __name__ == "__main__":
     i = 0
     lexer = Lexer('programa.txt')
+    parser = Parser(lexer)
+
+    parser.Programa()
+
 
     print("\n=>Lista de tokens:")
     token = lexer.proxToken(None)
@@ -18,6 +24,7 @@ if __name__ == "__main__":
         ultimo = token
 
 
+    parser.lexer.closeFile()
     print("\n=>Tabela de simbolos:")
     lexer.printTS()
     lexer.closeFile()

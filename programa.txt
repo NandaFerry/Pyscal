@@ -1,6 +1,5 @@
 # Teste1
-a = "asad
-"
+
 class Teste1:
    def bool booleanFunction(bool v1):
       return false;
