@@ -81,14 +81,21 @@ class Parser():
 
     # DeclaraID -> TipoPrimitivo ID ";"
     def DeclaraID(self):
-        self.TipoPrimitivo()
-        if not self.eat(Tag.ID):
-            self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
-        if not self.eat(Tag.OP_PONTO_VIRGULA):
-            self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        if self.eat(Tag.KW_BOOL) or self.eat(Tag.KW_INTEGER) or self.eat(Tag.KW_STRING) or self.eat(
+                Tag.KW_DOUBLE) or self.eat(Tag.KW_VOID):
+            self.TipoPrimitivo()
+            if not self.eat(Tag.ID):
+                self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            if not self.eat(Tag.OP_PONTO_VIRGULA):
+                self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.skip(
+                "Esperado \"void, String, bool, int, double, ID, ;\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.DeclaraID()
 
-    # ListaFuncao -. ListaFuncao'
+    # ListaFuncao -> ListaFuncao'
     def ListaFuncao(self):
+        if
         self.ListaFuncaoLinha()
 
     # ListaFuncao' -> Funcao ListaFuncao'| ε
@@ -195,7 +202,8 @@ class Parser():
     def TipoPrimitivo(self):
         if not self.eat(Tag.KW_BOOL) and not self.eat(Tag.KW_INTEGER) and not self.eat(Tag.KW_STRING) and not self.eat(
                 Tag.KW_DOUBLE) and not self.eat(Tag.KW_VOID):
-            self.sinalizaErroSintatico("Esperado \"bool, integer, String, double, void\", encontrado " + "\"" + self.token.getLexema() + "\"");
+            self.sinalizaErroSintatico(
+                "Esperado \"bool, integer, String, double, void\", encontrado " + "\"" + self.token.getLexema() + "\"");
             return
 
     # ListaCmd → ListaCmd’
@@ -221,7 +229,8 @@ class Parser():
         elif self.eat(Tag.KW_WRITE):
             self.CmdWrite()
         else:
-            self.sinalizaErroSintatico("Esperado \"if, while, id ou whrite\", encontrado " + "\"" + self.token.getLexema() + "\"");
+            self.sinalizaErroSintatico(
+                "Esperado \"if, while, id ou whrite\", encontrado " + "\"" + self.token.getLexema() + "\"");
             return
 
     # TODO verificar este método
@@ -405,7 +414,8 @@ class Parser():
             if not self.eat(Tag.OP_FPA):
                 self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
         elif not self.eat(Tag.NUM_INTEIRO) and not self.eat(Tag.LIT) and self.eat(Tag.NUM_DOUBLE):
-            self.sinalizaErroSintatico("Esperado \"numero inteiro, numero double ou string\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.sinalizaErroSintatico(
+                "Esperado \"numero inteiro, numero double ou string\"; encontrado " + "\"" + self.token.getLexema() + "\"")
 
     # TODO verificar esta funcao
     # Exp4’ → "(" RegexExp ")" | ε
@@ -424,7 +434,7 @@ class Parser():
             self.sinalizaErroSintatico("Esperado \"-, !\"; encontrado " + "\"" + self.token.getLexema() + "\"")
             return
 
-# ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    # ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     def Cmd(self):
         # Cmd -> if E then { CMD } CMD'
         if (self.eat(Tag.KW_IF)):
