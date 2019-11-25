@@ -95,16 +95,22 @@ class Parser():
 
     # ListaFuncao -> ListaFuncao'
     def ListaFuncao(self):
-        if
-        self.ListaFuncaoLinha()
+        if self.eat(Tag.KW_DEF) or self.eat((Tag.KW_DEFSTATIC)):
+            self.ListaFuncaoLinha()
+        else:
+            self.skip("Esperado \"def, defstatic\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.ListaFuncao()
 
     # ListaFuncao' -> Funcao ListaFuncao'| ε
     def ListaFuncaoLinha(self):
         if self.eat(Tag.KW_DEF):
             self.Funcao()
             self.ListaFuncaoLinha()
+
+            return
         else:
-            None  # Verificar essa parte
+            self.skip("Esperado \"def\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.ListaFuncaoLinha()
 
     # Funcao -> "def" TipoPrimitivo ID "(" ListaArg ")" ":" RegexDeclaraId ListaCmd Retorno "end" ";"
     def Funcao(self):
@@ -116,7 +122,9 @@ class Parser():
                 self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
             if not self.eat(Tag.OP_APA):
                 self.sinalizaErroSintatico("Esperado \"(\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+
             self.ListaArg()
+
             if not self.eat(Tag.OP_FPA):
                 self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
             if not self.eat(Tag.OP_DOIS_PONTOS):
@@ -135,37 +143,66 @@ class Parser():
 
     # DeclaraID RegexDeclaraId | ε
     def RegexDeclaraId(self):
-        # Verificar questão de vazio
-        self.DeclaraID()
-        self.RegexDeclaraId()
+        if self.eat(Tag.KW_VOID) or self.eat(Tag.KW_STRING) or self.eat(Tag.KW_BOOL) or self.eat(Tag.KW_INTEGER) or self.eat(Tag.KW_DOUBLE):
+
+            self.DeclaraID()
+            self.RegexDeclaraId()
+
+            return
+        if not self.eat(Tag.ID) or not self.eat(Tag.KW_END) or not self.eat(Tag.KW_RETURN) or not self.eat(Tag.KW_IF)\
+                or not self.eat(Tag.KW_WRITE) or not self.eat(Tag.KW_WHILE):
+            self.skip("Esperado \"id, end, return, if, write, while\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.RegexDeclaraId()
 
     # ListaArg -> Arf ListaArg'
     def ListaArg(self):
-        self.Arg()
-        self.ListaArgLinha()
+        if self.eat(Tag.KW_VOID) or self.eat(Tag.KW_STRING) or self.eat(Tag.KW_BOOL) or self.eat(Tag.KW_INTEGER) or self.eat(Tag.KW_DOUBLE):
+            self.Arg()
+            self.ListaArgLinha()
+        else:
+            self.skip(
+                "Esperado \"void, String, bool, integer, double\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.ListaArg()
 
     # ListaArgLinha -> "," ListaArg | ε
     def ListaArgLinha(self):
         if self.eat(Tag.OP_VIRGULA):
             self.ListaArg()
-        else:
+
             return
+
+        if not self.eat(Tag.OP_APA):
+            self.skip("Esperado \"',', )\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.ListaArgLinha()
 
     # Arg → TipoPrimitivo ID
     def Arg(self):
-        self.TipoPrimitivo()
-        if not self.eat(Tag.ID):
-            self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        if self.eat(Tag.KW_VOID) or self.eat(Tag.KW_STRING) or self.eat(Tag.KW_BOOL) or self.eat(
+                Tag.KW_INTEGER) or self.eat(Tag.KW_DOUBLE):
 
-    # TODO verificar vazio
+            self.TipoPrimitivo()
+
+            if not self.eat(Tag.ID):
+                self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+        else:
+            self.skip(
+                "Esperado \"void, String, bool, integer, double\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.Arg()
+
     # Retorno → "return" Expressao ";" | ε
     def Retorno(self):
         if self.eat(Tag.KW_RETURN):
+
             self.Expressao()
+
             if not self.eat(Tag.OP_PONTO_VIRGULA):
                 self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
-        else:
+
             return
+        if not self.eat(Tag.KW_END):
+            self.skip(
+                "Esperado \"void, String, bool, integer, double\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.Retorno()
 
     # Main → "defstatic" "void" "main" "(" "String" "[" "]" ID ")" ":" RegexDeclaraId ListaCmd "end" ";"
     def Main(self):
@@ -196,7 +233,8 @@ class Parser():
             if not self.eat(Tag.OP_PONTO_VIRGULA):
                 self.sinalizaErroSintatico("Esperado \";\"; encontrado " + "\"" + self.token.getLexema() + "\"")
         else:
-            self.sinalizaErroSintatico("Esperado \"defstatic\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            self.skip("Esperado \"defstatic\", encontrado " + "\"" + self.token.getLexema() + "\"")
+            if self.token.getNome() != Tag.EOF: self.Main()
 
     # TipoPrimitivo → "bool" | "integer" | "String" | "double" | "void"
     def TipoPrimitivo(self):
