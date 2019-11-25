@@ -53,6 +53,12 @@ class Parser():
         else:
             return False
 
+    def proximo(self, t):
+        if self.token.getNome() == t:
+            return True
+        else:
+            return False
+
     # TODO verificar todas as regras com vazio
 
     # Programa -> Classe EOF
