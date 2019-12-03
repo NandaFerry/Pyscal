@@ -5,7 +5,6 @@ from modulos.token import Token
 
 
 class Lexer:
-    # Arrumar linha e coluna
 
     def __init__(self, input_file):
         try:
@@ -14,10 +13,10 @@ class Lexer:
             self.n_line = 1
             self.n_column = 0
             self.ts = TS()
+            self.erro = []
         except IOError:
             print('Erro ao abrir arquivo.')
             sys.exit(0)
-
 
     def closeFile(self):
         try:
@@ -37,15 +36,31 @@ class Lexer:
     def printTS(self):
         self.ts.printTS()
 
-    def proxToken(self, token):
+    def erros(self):
+        print('!!! ' + self.erro + ' !!!')
+
+    def verificaAnterior(self):
+        ponteiro = self.input_file.tell()
+
+        try:
+            self.input_file.seek(self.input_file.tell() - 2)
+            caractere = self.input_file.read()
+            while caractere == ' ' or caractere == '\n' or caractere == '\t' or caractere == '\r':
+                self.input_file.seek(self.input_file.tell() - 2)
+        except:
+            return False
+
+        self.input_file.seek(ponteiro)
+        return caractere.isdigit()
+
+    def proxToken(self):
         estado = 0
         lexema = ""
         c = '\u0000'
-        T = token
+
         while True:
             self.lookahead = self.input_file.read(1)
             c = self.lookahead.decode('ascii')
-
 
             if c == '\t':
                 self.n_column += 4
@@ -55,11 +70,11 @@ class Lexer:
             if estado == 0:
                 if c == '\n':
                     self.n_column = 1
-                    self.n_line +=1
+                    self.n_line += 1
+                    estado = 0
                 if c == '':
-                    self.ts.addToken("EOF", Token(Tag.EOF, "EOF", self.n_line, self.n_column))
                     return Token(Tag.EOF, "EOF", self.n_line, self.n_column)
-                elif c == '\t' or c == '\n' or c == '\r':
+                elif c == '\t' or c == '\n' or  c == '\r':
                     estado = 0
                 elif c == ' ':
                     estado == 0
@@ -96,7 +111,9 @@ class Lexer:
                 elif c == '"':
                     estado = 29
                 elif c == '-':
-                    if T.getNome() == Tag.ID or T.getNome() == Tag.NUM_INTEIRO:
+                    lexema += c
+                    #TODO VERIFICAR ISSO
+                    if self.verificaAnterior():
                         estado = 36
                     else:
                         estado = 34

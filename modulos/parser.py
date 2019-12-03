@@ -30,7 +30,7 @@ class Parser():
 
     def __init__(self, lexer):
         self.lexer = lexer
-        self.token = lexer.proxToken(None)  # Leitura inicial obrigatoria do primeiro simbolo
+        self.token = lexer.proxToken()  # Leitura inicial obrigatoria do primeiro simbolo
 
     def sinalizaErroSintatico(self, message):
         print("[Erro Sintatico] na linha " + str(self.token.getLinha()) + " e coluna " + str(
@@ -52,7 +52,6 @@ class Parser():
             return True
         else:
             return False
-
 
     # Programa -> Classe EOF
     def Programa(self):
@@ -185,7 +184,7 @@ class Parser():
 
             return
 
-        if not self.toke.getNome() != Tag.OP_FPA:
+        if not self.token.getNome() != Tag.OP_FPA:
             self.skip("Esperado \"',', )\", encontrado " + "\"" + self.token.getLexema() + "\"")
             if self.token.getNome() != Tag.EOF: self.ListaArgLinha()
 
@@ -264,7 +263,7 @@ class Parser():
 
     # ListaCmd → ListaCmd’
     def ListaCmd(self):
-        if self.token.getNome() == Tag.KW_ID or self.token.getNome() == Tag.KW_IF or self.token.getNome() == Tag.KW_WHILE \
+        if self.token.getNome() == Tag.ID or self.token.getNome() == Tag.KW_IF or self.token.getNome() == Tag.KW_WHILE \
                 or self.token.getNome() == Tag.KW_WRITE or self.token.getNome() == Tag.KW_RETURN:
 
             self.ListaCmdLinha()
