@@ -54,23 +54,11 @@ class Parser():
 
     # Classe -> "class" ID ":" ListaFuncao Main "end" "."
     def Classe(self):
-        tempToken = copy.copy(self.token)
-
-        # Classe → "class" ID {TS.setTipo(ID.lexval, vazio)} ":" ListaFuncao  Main "end" "." 2
 
         if self.eat(Tag.KW_CLASS):
             if not self.eat(Tag.ID):
                 self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
-            noID = self.Tag.ID
-            # TODO VERIFICAR
-            self.lexer.ts.removeToken(tempToken.getLexema())
-            tempToken.setTipo(Tag.TIPO_VAZIO)
-            self.lexer.ts.addToken(tempToken.getLexema(), tempToken)
 
-            if noID.tipo != Tag.TIPO_VAZIO:
-                self.sinalizaErroSemantico("Variavel usada antes de atribuicao.")
-
-            self.lexer.ts.addToken(tempToken.getLexema(), tempToken)
             if not self.eat(Tag.OP_DOIS_PONTOS):
                 self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
 

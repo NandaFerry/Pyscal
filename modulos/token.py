@@ -1,3 +1,5 @@
+from modulos.tag import Tag
+
 class Token:
 
     def __init__(self, nome, lexema, linha, coluna):
@@ -5,6 +7,7 @@ class Token:
         self.lexema = lexema
         self.linha = linha
         self.coluna = coluna
+        self.tipo = Tag.TIPO_VAZIO
 
     def getNome(self):
         return self.nome
@@ -26,3 +29,9 @@ class Token:
 
     def toString(self):
         return "<" + str(self.nome.name) + ", \"" + str(self.lexema) + "\">"
+
+    def getTipo(self):
+        return self.tipo
+
+    def setTipo(self, tipo):
+        self.tipo = tipo
