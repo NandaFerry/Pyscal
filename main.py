@@ -21,5 +21,5 @@ if __name__ == "__main__":
     print("\n=>Tabela de simbolos:")
     lexer.printTS()
     lexer.closeFile()
-    #parser.lexer.closeFile()
+    parser.lexer.closeFile()
     print('\n=> Compilado com sucesso')

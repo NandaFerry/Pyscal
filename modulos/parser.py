@@ -4,6 +4,7 @@ from modulos.ts import TS
 from modulos.tag import Tag
 from modulos.token import Token
 from modulos.lexer import Lexer
+from modulos.no import No
 
 """
  * *
@@ -31,6 +32,11 @@ class Parser():
     def __init__(self, lexer):
         self.lexer = lexer
         self.token = lexer.proxToken()  # Leitura inicial obrigatoria do primeiro simbolo
+
+    def sinalizaErroSemantico(self, message):
+        print("[Erro Semantico] na linha " + str(self.token.getLinha()) + " e coluna " + str(
+            self.token.getColuna()) + ": ")
+        print(message, "\n")
 
     def sinalizaErroSintatico(self, message):
         print("[Erro Sintatico] na linha " + str(self.token.getLinha()) + " e coluna " + str(
