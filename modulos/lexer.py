@@ -240,14 +240,10 @@ class Lexer:
 
             # -- begin estado 27
             elif estado == 27:
-                if c.isalnum():
-                    lexema += c
-                elif c == '\n':
-                    self.retornaPonteiro()
-                    token = self.ts.getToken(lexema)
-                    if token is None:
-                        token = Token(Tag.COMENTARIO, "# %s" % lexema, self.n_line, self.n_column)
-                    return token
+                if c == '\n':
+                    estado = 0
+                    self.n_line += 1
+                    self.n_column = 0
             # -- end estado 27
 
             # -- begin estado 29
