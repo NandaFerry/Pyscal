@@ -39,20 +39,6 @@ class Lexer:
     def erros(self):
         print('!!! ' + self.erro + ' !!!')
 
-    def verificaAnterior(self):
-        ponteiro = self.input_file.tell()
-
-        try:
-            self.input_file.seek(self.input_file.tell() - 2)
-            caractere = self.input_file.read()
-            while caractere == ' ' or caractere == '\n' or caractere == '\t' or caractere == '\r':
-                self.input_file.seek(self.input_file.tell() - 2)
-        except:
-            return False
-
-        self.input_file.seek(ponteiro)
-        return caractere.isdigit()
-
     def proxToken(self):
         estado = 0
         lexema = ""
@@ -111,9 +97,9 @@ class Lexer:
                 elif c == '"':
                     estado = 29
                 elif c == '-':
-                    lexema += c
-                    #TODO VERIFICAR ISSO
-                    if self.verificaAnterior():
+                    x = self.retornaPonteiro()
+                    print(x)
+                    if  x == Tag.ID or x == Tag.NUM_INTEIRO:
                         estado = 36
                     else:
                         estado = 34
@@ -309,8 +295,12 @@ class Lexer:
 
             # -- begin estado 34
             elif estado == 34:
-                self.retornaPonteiro()
-                return Token(Tag.OP_NEGACAO, "-", self.n_line, self.n_column)
+                if (c == '-'):
+                    return Token(Tag.OP_NEGACAO, "-", self.n_line, self.n_column)
+                else:
+                    self.retornaPonteiro()
+                    return Token(Tag.OP_NEGACAO, "-", self.n_line, self.n_column)
+
             # -- end estado 34
 
             # -- begin estado 35

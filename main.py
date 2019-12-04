@@ -4,10 +4,9 @@ from modulos.parser import Parser
 
 if __name__ == "__main__":
     lexer = Lexer('programa.txt')
-    #parser = Parser(lexer)
+    parser = Parser(lexer)
 
-    #parser.Programa()
-
+    parser.Programa()
 
     print("\n=>Lista de tokens:")
     token = lexer.proxToken()
@@ -23,5 +22,4 @@ if __name__ == "__main__":
     lexer.printTS()
     lexer.closeFile()
     #parser.lexer.closeFile()
-
     print('\n=> Compilado com sucesso')
