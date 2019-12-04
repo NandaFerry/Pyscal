@@ -1,30 +1,10 @@
 import sys
-
+import copy
 from modulos.ts import TS
 from modulos.tag import Tag
 from modulos.token import Token
 from modulos.lexer import Lexer
 from modulos.no import No
-
-"""
- * *
- * [TODO]: tratar retorno 'None' do Lexer que esta sem Modo Panico
- *
- *
- * Modo Pânico do Parser: 
-    * Para tomar a decisao de escolher uma das regras (quando mais de uma disponivel),
-    * o parser usa incialmente o FIRST(), e para alguns casos, FOLLOW(). Essa informacao eh dada pela TP.
-    * Caso nao existe a regra na TP que corresponda ao token da entrada,
-    * informa-se uma mensagem de erro e inicia-se o Modo Panico:
-    * [1] calcula-se o FOLLOW do NAO-TERMINAL (a esquerda) da regra atual: esse NAO-TERMINAL estara no topo da pilha;
-    * [2] se o token da entrada estiver neste FOLLOW, desempilha-se o nao-terminal atual - metodo synch() - retorna da recursao;
-    * [3] caso contrario, a entrada eh avancada para uma nova comparacao e mantem-se o nao-terminal no topo da pilha 
-    * (se for a pilha recursiva, mantem o procedimento no topo da recursao) - metodo skip().
-    * 
-    * O Modo Panico encerra-se, 'automagicamente', quando um token esperado aparece.
-    * Para NAO implementar o Modo Panico, basta sinalizar erro quando nao
-    * for possivel utilizar alguma das regras. Em seguida, encerrar a execucao usando sys.exit(0).
-"""
 
 
 class Parser():
@@ -74,9 +54,23 @@ class Parser():
 
     # Classe -> "class" ID ":" ListaFuncao Main "end" "."
     def Classe(self):
+        tempToken = copy.copy(self.token)
+
+        # Classe → "class" ID {TS.setTipo(ID.lexval, vazio)} ":" ListaFuncao  Main "end" "." 2
+
         if self.eat(Tag.KW_CLASS):
             if not self.eat(Tag.ID):
                 self.sinalizaErroSintatico("Esperado \"ID\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            noID = self.Tag.ID
+            # TODO VERIFICAR
+            self.lexer.ts.removeToken(tempToken.getLexema())
+            tempToken.setTipo(Tag.TIPO_VAZIO)
+            self.lexer.ts.addToken(tempToken.getLexema(), tempToken)
+
+            if noID.tipo != Tag.TIPO_VAZIO:
+                self.sinalizaErroSemantico("Variavel usada antes de atribuicao.")
+
+            self.lexer.ts.addToken(tempToken.getLexema(), tempToken)
             if not self.eat(Tag.OP_DOIS_PONTOS):
                 self.sinalizaErroSintatico("Esperado \":\"; encontrado " + "\"" + self.token.getLexema() + "\"")
 
@@ -92,6 +86,9 @@ class Parser():
 
     # DeclaraID -> TipoPrimitivo ID ";"
     def DeclaraID(self):
+
+        # DeclaraID → TipoPrimitivo ID { TS.setTipo(ID.lexval, TipoPrimitivo.t) } ";" 3
+        # TODO
         if self.token.getNome() == Tag.KW_BOOL or self.token.getNome() == Tag.KW_INTEGER or \
                 self.token.getNome() == Tag.KW_STRING or self.token.getNome() == Tag.KW_DOUBLE \
                 or self.token.getNome() == Tag.KW_VOID:

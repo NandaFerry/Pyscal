@@ -67,3 +67,10 @@ class Tag(Enum):
     OP_NEGACAO = 47
 
     OP_PONTO = 48
+
+    # Constantes para tipos
+    TIPO_VAZIO = 1000
+    TIPO_LOGICO = 1001
+    TIPO_INT = 1002
+    TIPO_DOUBLE = 1003
+    TIPO_ERRO = 1004
