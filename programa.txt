@@ -1,21 +1,20 @@
-# Teste1
+# programa exemplo em Pyscal
+  	class Pressao2:
+  	  	def bool podeEntregarDepois(bool dizQueSim):
+        	return true;
+      	end;
 
-class Teste1:
-   def bool booleanFunction(bool v1):
-      return false;
-   end;
+  		defstatic void main(String[] args):
 
-   def void fazNada(String v1):
-   end;
+            String message;
+            String oi;
+            bool answer;
 
-   defstatic void main(String[] args):
-      write("Teste 1:");
-      write("\n");
+            message = "hello";
+            answer = true;
 
-      if (booleanFunction(true)):
-         write("N@o entrei aqui.");
-      else:
-         write("Mas aqui &u entrei!");
-      end;
-   end;
-end.
+  			if(podeEntregarDepois(answer)):
+  				write(message);
+  			end;
+  		end;
+  	end.
