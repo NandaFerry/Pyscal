@@ -32,6 +32,8 @@ class Parser():
     def __init__(self, lexer):
         self.lexer = lexer
         self.token = lexer.proxToken()  # Leitura inicial obrigatoria do primeiro simbolo
+        if self.token is None:  # erro no Lexer
+            sys.exit(0)
 
     def sinalizaErroSemantico(self, message):
         print("[Erro Semantico] na linha " + str(self.token.getLinha()) + " e coluna " + str(
@@ -44,8 +46,11 @@ class Parser():
         print(message, "\n")
 
     def advance(self):
-        print("[DEBUG] token: ", self.token.toString())
+        # print("[DEBUG] token: ", self.token.toString())
         self.token = self.lexer.proxToken()
+
+        if self.token is None:  # erro no Lexer
+            sys.exit(0)
 
     def skip(self, message):
         self.sinalizaErroSintatico(message)
@@ -65,6 +70,7 @@ class Parser():
 
         if self.token.getNome() != Tag.EOF:
             self.sinalizaErroSintatico("Esperado \"EOF\"; encontrado " + "\"" + self.token.getLexema() + "\"")
+            sys.exit(0)
 
     # Classe -> "class" ID ":" ListaFuncao Main "end" "."
     def Classe(self):
