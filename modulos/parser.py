@@ -454,5 +454,5 @@ class Parser():
 
     def OpUnario(self):
         # OpUnario -> "-" | "!"
-        if (not self.eat(Tag.OP_INVERSOR) or not self.eat(Tag.OP_NEGACAO)):
+        if (not self.eat(Tag.OP_SUBTRACAO) or not self.eat(Tag.OP_NEGACAO)):
             self.sinalizaErroSintatico("Esperado \"'-' ou '!'\"; encontrado " + "\"" + self.token.getLexema() + "\"")
