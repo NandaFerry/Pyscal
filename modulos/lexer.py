@@ -82,9 +82,9 @@ class Lexer:
                     estado = 20
                 elif c == ')':
                     estado = 21
-                elif c == ']':
-                    estado = 22
                 elif c == '[':
+                    estado = 22
+                elif c == ']':
                     estado = 23
                 elif c == ',':
                     estado = 24
