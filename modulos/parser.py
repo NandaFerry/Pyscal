@@ -651,13 +651,9 @@ class Parser():
             self.Exp3Linha()
             return
         else:
-            if self.token.getNome() == Tag.OP_SUBTRACAO or self.token.getNome() == Tag.OP_ADICAO or \
-                    self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE \
-                    or self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or \
-                    self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or \
-                    self.token.getNome() == Tag.OP_VIRGULA:
+            if self.token.getNome() in (Tag.OP_SUBTRACAO, Tag.OP_ADICAO, Tag.OP_MAIOR, Tag.OP_MAIOR_IGUAL, Tag.OP_MENOR, \
+                                       Tag.OP_MENOR_IGUAL, Tag.OP_IGUAL_IGUAL, Tag.OP_DIFERENTE, Tag.KW_OR, Tag.KW_AND, \
+                                       Tag.OP_FPA, Tag.OP_PONTO_VIRGULA, Tag.OP_VIRGULA):
                 return
             else:
                 self.skip(
@@ -677,14 +673,9 @@ class Parser():
                 self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
         elif not self.eat(Tag.NUM_INTEIRO) and not self.eat(Tag.LIT) and not self.eat(Tag.NUM_DOUBLE) and not self.eat(
                 Tag.KW_TRUE) and not self.eat(Tag.KW_FALSE):
-            if self.token.getNome() == Tag.OP_MULTIPLICACAO or self.token.getNome() == Tag.OP_DIVISAO or \
-                    self.token.getNome() == Tag.OP_ADICAO or self.token.getNome() == Tag.OP_SUBTRACAO or \
-                    self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE or \
-                    self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or\
-                    self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA or \
-                    self.token.getNome() == Tag.OP_VIRGULA:
+            if self.token.getNome() in (Tag.OP_MULTIPLICACAO, Tag.OP_DIVISAO, Tag.OP_ADICAO , Tag.OP_SUBTRACAO, Tag.OP_MENOR, \
+                                        Tag.OP_MENOR_IGUAL, Tag.OP_MAIOR, Tag.OP_MAIOR_IGUAL, Tag.OP_IGUAL_IGUAL, Tag.OP_DIFERENTE,\
+                                        Tag.KW_OR, Tag.KW_AND, Tag.OP_FPA, Tag.OP_PONTO_VIRGULA, Tag.OP_VIRGULA):
                 self.sync("Esperado \"ID, constInt, constDouble, String, true, false, !, -n, (\"; encontrado " + "\"" + self.token.getLexema() + "\"")
                 return
             else:
@@ -698,14 +689,9 @@ class Parser():
             if not self.eat(Tag.OP_FPA):
                 self.sinalizaErroSintatico("Esperado \")\"; encontrado " + "\"" + self.token.getLexema() + "\"")
         else:
-            if self.token.getNome() == Tag.OP_MULTIPLICACAO or self.token.getNome() == Tag.OP_DIVISAO or \
-                    self.token.getNome() == Tag.OP_SUBTRACAO or self.token.getNome() == Tag.OP_ADICAO or \
-                    self.token.getNome() == Tag.OP_MAIOR or self.token.getNome() == Tag.OP_MAIOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_MENOR or self.token.getNome() == Tag.OP_MENOR_IGUAL or \
-                    self.token.getNome() == Tag.OP_IGUAL_IGUAL or self.token.getNome() == Tag.OP_DIFERENTE or\
-                    self.token.getNome() == Tag.KW_OR or self.token.getNome() == Tag.KW_AND or \
-                    self.token.getNome() == Tag.OP_FPA or self.token.getNome() == Tag.OP_PONTO_VIRGULA \
-                    or self.token.getNome() == Tag.OP_VIRGULA:
+            if self.token.getNome() in (Tag.OP_MULTIPLICACAO, Tag.OP_DIVISAO, Tag.OP_SUBTRACAO, Tag.OP_ADICAO, Tag.OP_MAIOR, \
+                                        Tag.OP_MAIOR_IGUAL, Tag.OP_MENOR, Tag.OP_MENOR_IGUAL, Tag.OP_IGUAL_IGUAL, Tag.OP_DIFERENTE, \
+                                        Tag.KW_OR, Tag.KW_AND, Tag.OP_FPA, Tag.OP_PONTO_VIRGULA, Tag.OP_VIRGULA):
                 return
             else:
                 self.skip("Esperado \";, ), ',', or, and, <, <=, >, >=, ==, !=, + , -, *, /\", encontrado " + "\"" + self.token.getLexema() + "\"")
@@ -714,11 +700,11 @@ class Parser():
     # OpUnario → "-" | "!"
     def OpUnario(self):
         if not self.eat(Tag.OP_NEGACAO) and not self.eat(Tag.OP_UNARIO_DIFERENTE):
-            if self.token.getNome() == Tag.ID or self.token.getNome() == Tag.NUM_INTEIRO or self.token.getNome() == Tag.NUM_DOUBLE or self.token.getNome() == Tag.LIT or \
-            self.token.getNome() == Tag.KW_TRUE or self.token.getNome() == Tag.KW_FALSE or self.token.getNome() == Tag.OP_NEGACAO or self.token.getNome() == Tag.OP_UNARIO_DIFERENTE or\
-            self.token.getNome() == Tag.OP_APA:
+            if self.token.getNome() in (Tag.ID, Tag.NUM_INTEIRO, Tag.NUM_DOUBLE, Tag.LIT,Tag.KW_TRUE, Tag.KW_FALSE, Tag.OP_NEGACAO, Tag.OP_UNARIO_DIFERENTE, Tag.OP_APA):
                 self.sync("Esperado \"-n, !\", encontrado " + "\"" + self.token.getLexema() + "\"")
+
                 return
+
             else:
                 self.skip("Esperado \"-n, !\", encontrado " + "\"" + self.token.getLexema() + "\"")
                 if self.token.getNome() != Tag.EOF: self.OpUnario()
