@@ -12,7 +12,7 @@ class TesteT2:
       double x;
       integer y;
 
-      y = 2.0 + 1 - 1;
+      y = 2.0 + 1;
       x = 00.42 * (-y) / 1;
       z = 10;
 
@@ -22,7 +22,7 @@ class TesteT2:
          write(x > y and z == 10);
       end;
 
-      if (!exemploDeFuncao(x,y) or exemploDeFuncao(x,z))
+      if (!exemploDeFuncao(x,y) or exemploDeFuncao(x,z)):
          write("Entrou aqui");
       end;
    end;

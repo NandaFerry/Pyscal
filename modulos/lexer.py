@@ -310,4 +310,3 @@ class Lexer:
                 self.retornaPonteiro()
                 return Token(Tag.OP_SUBTRACAO, "-", self.n_line, self.n_column)
             # -- end estado 35
-
