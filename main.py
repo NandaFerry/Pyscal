@@ -5,7 +5,7 @@ from modulos.parser import Parser
 # Fernanda Teixeira Ferry e Vitória Maria
 
 if __name__ == "__main__":
-    lexer = Lexer('programa2.txt')
+    lexer = Lexer('programa.txt')
     parser = Parser(lexer)
 
     parser.Programa()
