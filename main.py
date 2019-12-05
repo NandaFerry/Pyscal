@@ -3,7 +3,7 @@ from modulos.lexer import Lexer
 from modulos.parser import Parser
 
 if __name__ == "__main__":
-    lexer = Lexer('programa.txt')
+    lexer = Lexer('programa2.txt')
     parser = Parser(lexer)
 
     parser.Programa()
