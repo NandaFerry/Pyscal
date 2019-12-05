@@ -431,7 +431,7 @@ class Parser():
         if (self.eat(Tag.ID)):
             self.Exp4Linha()
         # Exp4 -> OpUnario Exp4
-        elif (self.token.getNome() in (Tag.OP_NEGACAO, Tag.OP_SUBTRACAO)):
+        elif (self.token.getNome() in (Tag.OP_NEGACAO, Tag.OP_UNARIO_DIFERENTE)):
             self.OpUnario()
             self.Exp4()
         # Exp4 -> ( Expressao)
@@ -454,5 +454,6 @@ class Parser():
 
     def OpUnario(self):
         # OpUnario -> "-" | "!"
-        if (not self.eat(Tag.OP_SUBTRACAO) or not self.eat(Tag.OP_NEGACAO)):
+
+        if (not self.eat(Tag.OP_UNARIO_DIFERENTE) or not self.eat(Tag.OP_NEGACAO)):
             self.sinalizaErroSintatico("Esperado \"'-' ou '!'\"; encontrado " + "\"" + self.token.getLexema() + "\"")
