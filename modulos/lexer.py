@@ -253,7 +253,7 @@ class Lexer:
                                             str(self.n_line) + " e coluna " + str(self.n_column))
                     token = None
                     estado = 0
-                elif c.isalnum():
+                elif c.isdigit():
                     lexema += c
                 elif c.isalpha():
                     lexema += c
@@ -276,7 +276,7 @@ class Lexer:
 
             # -- begin estado 32
             elif estado == 32:
-                if c.isalnum() or c.isalpha() or c == '_':
+                if c.isdigit() or c.isalpha() or c == '_':
                     lexema += c
                 else:
                     self.retornaPonteiro()
